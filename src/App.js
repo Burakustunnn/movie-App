@@ -1,12 +1,14 @@
 import { BrowserRouter } from "react-router-dom";
 import AppRouter from "./router/AppRouter";
-
+import MovieContextProvider from "./context/MovieContext";
 
 function App() {
   return (
-   <BrowserRouter>
-   <AppRouter/>
-   </BrowserRouter>
+    <BrowserRouter>
+      <MovieContextProvider>
+        <AppRouter />
+      </MovieContextProvider>
+    </BrowserRouter>
   );
 }
 
