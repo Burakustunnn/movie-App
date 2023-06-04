@@ -7,9 +7,8 @@ const Home = () => {
   console.log(movies);
   console.log(loading);
   return (
-    <>
-    <p>asd</p>
-      <form className="max-w-screen-sm mx-auto mt-4">
+    <>    
+      <form className="max-w-screen-sm mx-auto mt-4 ">
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg

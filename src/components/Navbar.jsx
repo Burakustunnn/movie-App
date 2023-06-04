@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const currentuser = false;
@@ -7,9 +8,9 @@ const Navbar = () => {
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="https://flowbite.com/" className="flex items-center">
           {/* <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" /> */}
-          <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <Link className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white" to={"/"}>
             Movie App
-          </span>
+          </Link>
         </a>
 
         {currentuser ? (
@@ -152,12 +153,12 @@ const Navbar = () => {
           </>
         ) : (
           <div className="flex gap-10 text-white">
-            <button>
-              <span>Login</span>
-            </button>
-            <button>
-              <span>Register</span>
-            </button>
+            <Link to={"/login"}>
+              login
+            </Link>
+            <Link to={"/register"}>
+            Register
+            </Link>
           </div>
         )}
       </div>
