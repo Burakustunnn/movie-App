@@ -5,12 +5,16 @@ const defaultImage =
   "https://images.unsplash.com/photo-1581905764498-f1b60bae941a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80";
 
 const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
+
   const navigate = useNavigate();
+
+  
 
   return (
     <div
       className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center justify-between"
-      onClick={() => navigate("/details/:id")}
+      onClick={() => navigate(`/details/${id}`)}
+
     >
       <a href="#">
         <img
