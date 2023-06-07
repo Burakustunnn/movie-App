@@ -75,8 +75,8 @@ const MovieDetail = () => {
           </div>
         </div>
         {/*             <p>ICON BTNS</p> */}
-        {/* <div className="flex justify-between items-center px-4 mb-4 w-full">
-          <div className="flex">
+        <div className="flex justify-between items-center px-4 mb-4 w-full">
+          {/* <div className="flex">
             <i className="material-icons mr-2 text-red-600">favorite_border</i>
             <i className="material-icons text-blue-600">remove_red_eye</i>
           </div>
@@ -93,8 +93,28 @@ const MovieDetail = () => {
             <i className="material-icons ml-2 text-yellow-600">star_outline</i>
             <i className="material-icons ml-2 text-yellow-600">star_half</i>
             <i className="material-icons ml-2 text-yellow-600">star</i>
-          </div>
-        </div> */}
+          </div> */}
+
+
+<div className="w-10/12 md:w-3/5 mx-auto my-3">
+      <div
+        className="embed-responsive embed-responsive-16by9 relative w-full overflow-hidden rounded-xl"
+        style={{ paddingTop: "56.25%" }}
+      >
+        <iframe
+          className="embed-responsive-item absolute top-0 right-0 bottom-0 left-0 h-full w-full"
+          // src={`https://www.youtube.com/embed/${videoKey}?autoplay=1&mute=1`}
+          // allowFullScreen
+          title="YouTube video"
+          data-gtm-yt-inspected-2340190_699="true"
+          // id={240632615}
+        />
+      </div>
+    </div>
+
+
+
+        </div>
       </div>
     </div>
   );
