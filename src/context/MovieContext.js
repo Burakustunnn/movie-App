@@ -5,28 +5,26 @@ export const MovieContext = createContext();
 
 const API_KEY = process.env.REACT_APP_TMDB_KEY;
 const FEATURED_API = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}`;
-// const FEATURED_API = `https://api.themoviedb.org/3/movie/550?api_key=e29242eb4c132df6f39057f594471f48`;
 
 const MovieContextProvider = ({ children }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   
-  
-  const getMovies = (API) => {
 
-    setLoading(true)
-    
+  const getMovies = (API) => {
+    setLoading(true);
+
     axios
-    .get(API)
-    .then((res) => setMovies(res.data.results))
-    .catch((err) => console.log(err))
-    .finally(setLoading(false));
+      .get(API)
+      .then((res) => setMovies(res.data.results))
+      .catch((err)=>console.log(err))
+      .finally(setLoading(false));
   };
-  
+
   useEffect(() => {
     getMovies(FEATURED_API);
   }, []);
-  const values = {movies,loading};
+  const values = { movies, loading, getMovies };
   return (
     <MovieContext.Provider value={values}>{children}</MovieContext.Provider>
   );

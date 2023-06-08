@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Video from "../components/Video";
 
 const baseImageUrl = "https://image.tmdb.org/t/p/w1280";
 const defaultImage =
@@ -8,20 +9,27 @@ const defaultImage =
 
 const MovieDetail = () => {
   const [movieDetails, setMovieDetails] = useState([]);
+  const [videoKey, setVideoKey] = useState();
+
   const { id } = useParams();
 
   const API_KEY = process.env.REACT_APP_TMDB_KEY;
   const movieDetailBaseUrl = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`;
-  console.log(movieDetails);
+  const videoUrl = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`;
+
   useEffect(() => {
     axios
       .get(movieDetailBaseUrl)
       .then((res) => setMovieDetails(res.data))
       .catch((err) => console.log(err));
+    axios
+      .get(videoUrl)
+      .then((res) => setVideoKey(res.data.results[0].key))
+      .catch();
   }, []);
 
   return (
-    <div className="min-h-screen grid place-items-center font-mono bg-gray-900 text-center">
+    <div className="min-h-screen grid place-items-center font-mono bg-gray-900 text-center" key={id}>
       <div className="bg-white rounded-md dark:bg-gray-800 shadow-lg">
         <div className="md:flex px-4 leading-none max-w-4xl">
           <div className="flex-none ">
@@ -47,73 +55,13 @@ const MovieDetail = () => {
             <p className="hidden md:block px-4 my-4 text-sm text-left">
               {movieDetails.overview}
             </p>
-            <p className="flex text-md px-4 my-2">
-              Rating: 9.0/10
-              <span className="font-bold px-2">|</span>
-              Mood: Dark
-            </p>
-            {/* <div className="text-xs">
-              <button
-                type="button"
-                className="border border-gray-400 text-gray-400 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-900 focus:outline-none focus:shadow-outline"
-              >
-                TRAILER
-              </button>
-              <button
-                type="button"
-                className="border border-gray-400 text-gray-400 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-900 focus:outline-none focus:shadow-outline"
-              >
-                IMDB
-              </button>
-              <button
-                type="button"
-                className="border border-gray-400 text-gray-400 rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-900 focus:outline-none focus:shadow-outline"
-              >
-                AMAZON
-              </button>
-            </div> */}
           </div>
         </div>
-        {/*             <p>ICON BTNS</p> */}
+        {/* ************* VİDEO ************* */}
         <div className="flex justify-between items-center px-4 mb-4 w-full">
-          {/* <div className="flex">
-            <i className="material-icons mr-2 text-red-600">favorite_border</i>
-            <i className="material-icons text-blue-600">remove_red_eye</i>
+          <div className="w-full my-3">
+            <Video videoKey={videoKey} />
           </div>
-          <div className="flex">
-            <i className="material-icons ml-2 text-yellow-600">
-              sentiment_very_satisfied
-            </i>
-            <i className="material-icons ml-2 text-yellow-600">
-              sentiment_neutral
-            </i>
-            <i className="material-icons ml-2 text-yellow-600">
-              sentiment_very_dissatisfied
-            </i>
-            <i className="material-icons ml-2 text-yellow-600">star_outline</i>
-            <i className="material-icons ml-2 text-yellow-600">star_half</i>
-            <i className="material-icons ml-2 text-yellow-600">star</i>
-          </div> */}
-
-
-<div className="w-10/12 md:w-3/5 mx-auto my-3">
-      <div
-        className="embed-responsive embed-responsive-16by9 relative w-full overflow-hidden rounded-xl"
-        style={{ paddingTop: "56.25%" }}
-      >
-        <iframe
-          className="embed-responsive-item absolute top-0 right-0 bottom-0 left-0 h-full w-full"
-          // src={`https://www.youtube.com/embed/${videoKey}?autoplay=1&mute=1`}
-          // allowFullScreen
-          title="YouTube video"
-          data-gtm-yt-inspected-2340190_699="true"
-          // id={240632615}
-        />
-      </div>
-    </div>
-
-
-
         </div>
       </div>
     </div>

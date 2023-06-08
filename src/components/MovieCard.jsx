@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
+
 const IMG_API = "https://image.tmdb.org/t/p/w1280";
 const defaultImage =
   "https://images.unsplash.com/photo-1581905764498-f1b60bae941a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80";
-
 const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
 
   const navigate = useNavigate();
@@ -14,15 +14,16 @@ const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
     <div
       className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center justify-between"
       onClick={() => navigate(`/details/${id}`)}
+      id={id}
 
     >
-      <a href="#">
+     
         <img
           className="rounded-t-lg"
           src={poster_path ? IMG_API + poster_path : defaultImage}
           alt=""
         />
-      </a>
+     
       <div className="">
         <h5 className="mb-2 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
           {title}

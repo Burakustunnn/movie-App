@@ -154,7 +154,7 @@ const Navbar = () => {
         ) : (
           <div className="flex gap-10 text-white">
             <Link to={"/login"}>
-              login
+              Login
             </Link>
             <Link to={"/register"}>
             Register
