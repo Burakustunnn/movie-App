@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 const Login = () => {
-  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -9,19 +8,15 @@ const Login = () => {
 
   const { email, password } = formData;
 
-
-
   const handleFormData = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     setFormData({ username: "", email: "", password: "", address: "" });
   };
-
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12 w-[100%]">
@@ -75,10 +70,16 @@ const Login = () => {
                   </div>
                 </div>
                 <div className="flex gap-4 items-center justify-center flex-col">
-                  <button className="bg-blue-500 w-6/12 text-white rounded-md px-2 py-1">
+                  <button
+                    className="bg-blue-500 w-6/12 text-white rounded-md px-2 py-1"
+                    type="submit"
+                  >
                     Submit
                   </button>
-                  <button className="bg-blue-500 text-white w-6/12 rounded-md px-2 py-1">
+                  <button
+                    className="bg-blue-500 text-white w-6/12 rounded-md px-2 py-1"
+                    type="button"
+                  >
                     Google
                   </button>
                 </div>
