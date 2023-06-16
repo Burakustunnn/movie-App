@@ -26,7 +26,7 @@ const MovieDetail = () => {
       .get(videoUrl)
       .then((res) => setVideoKey(res.data.results[0].key))
       .catch();
-  }, []);
+  }, [movieDetailBaseUrl,videoUrl]);
 
   return (
     <div className="min-h-screen grid place-items-center font-mono bg-gray-900 text-center" key={id}>
@@ -60,7 +60,7 @@ const MovieDetail = () => {
         {/* ************* VİDEO ************* */}
         <div className="flex justify-between items-center px-4 mb-4 w-full">
           <div className="w-full my-3">
-            <Video videoKey={videoKey} />
+           {videoKey && <Video videoKey={videoKey} />}
           </div>
         </div>
       </div>

@@ -1,24 +1,30 @@
 import { useContext, useState } from "react";
 import { MovieContext } from "../context/MovieContext";
 import MovieCard from "../components/MovieCard";
+import { AuthContext } from "../context/AuthContext";
 
 const API_KEY = process.env.REACT_APP_TMDB_KEY;
 const SEARCH_API = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=`;
+const FEATURED_API = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}`;
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { movies, loading, getMovies } = useContext(MovieContext);
+  const {currentUser } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (searchTerm) {
       getMovies(SEARCH_API + searchTerm);
+    }else{
+      getMovies(FEATURED_API)
+
     }
   };
 
   return (
     <>
-      <form className="max-w-screen-sm mx-auto mt-4 " onSubmit={handleSubmit}>
+      {currentUser && <form className="max-w-screen-sm mx-auto mt-4 " onSubmit={handleSubmit}>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg
@@ -41,8 +47,7 @@ const Home = () => {
             type="search"
             id="default-search"
             className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white  "
-            placeholder="Search a movie..."
-            required
+            placeholder="Search a movie..."           
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value.trim())}
           />
@@ -53,7 +58,7 @@ const Home = () => {
             Search
           </button>
         </div>
-      </form>
+      </form>}
       <div className="flex justify-center flex-wrap gap-6 p-4 ">
         {loading ? (
           <div

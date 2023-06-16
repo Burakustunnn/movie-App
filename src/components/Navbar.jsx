@@ -1,19 +1,20 @@
-import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
-  const currentuser = false;
+  const { currentUser, logOut } = useContext(AuthContext);
+ 
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900 sticky top-0 z-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="https://flowbite.com/" className="flex items-center">
-          {/* <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo" /> */}
-          <Link className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white" to={"/"}>
+        <a href={"/"} className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
+        
             Movie App
-          </Link>
+        
         </a>
 
-        {currentuser ? (
+        {currentUser ? (
           <>
             <div className="flex items-center md:order-2">
               <button
@@ -24,10 +25,9 @@ const Navbar = () => {
                 data-dropdown-toggle="user-dropdown"
                 data-dropdown-placement="bottom"
               >
-                <span className="sr-only">Open user menu</span>
                 <img
                   className="w-8 h-8 rounded-full"
-                  src="/docs/images/people/profile-picture-3.jpg"
+                  src= "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzPb_pSj-ir-9eB6mi0lVJdQP1KKHiB8fRBS1CbmOXGd9Z1FEGMJHbEKhahwhWLGSaEXY&usqp=CAU"
                   alt="user photo"
                 />
               </button>
@@ -38,10 +38,10 @@ const Navbar = () => {
               >
                 <div className="px-4 py-3">
                   <span className="block text-sm text-gray-900 dark:text-white">
-                    Bonnie Green
+                   {currentUser?.displayName}
                   </span>
                   <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                    name@flowbite.com
+                    {currentUser?.email}
                   </span>
                 </div>
                 <ul className="py-2" aria-labelledby="user-menu-button">
@@ -61,15 +61,8 @@ const Navbar = () => {
                       Settings
                     </a>
                   </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                    >
-                      Login
-                    </a>
-                  </li>
-                  <li>
+
+                  <li onClick={logOut}>
                     <a
                       href="#"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
@@ -153,12 +146,8 @@ const Navbar = () => {
           </>
         ) : (
           <div className="flex gap-10 text-white">
-            <Link to={"/login"}>
-              Login
-            </Link>
-            <Link to={"/register"}>
-            Register
-            </Link>
+            <Link to={"/login"}>Login</Link>
+            <Link to={"/register"}>Register</Link>
           </div>
         )}
       </div>

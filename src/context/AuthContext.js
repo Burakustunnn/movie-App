@@ -1,21 +1,33 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
+} from "firebase/auth";
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState(
+    JSON.parse(sessionStorage.getItem("user")) || false
+  );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    userObserver();
+  }, []);
 
   // REGİSTER İŞLEMİ
   const createUser = async (email, password) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
+      toastSuccessNotify("Registered successfully!");
       navigate("/");
     } catch (error) {
-      console.log(error);
+      toastErrorNotify(error.message);
     }
   };
 
@@ -23,9 +35,10 @@ const AuthContextProvider = ({ children }) => {
   const signIn = async (email, password) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      toastSuccessNotify("Logged in successfully!");
       navigate("/");
     } catch (error) {
-      console.log(error);
+      toastErrorNotify(error.message);
     }
   };
 
@@ -34,19 +47,25 @@ const AuthContextProvider = ({ children }) => {
     signOut(auth);
   };
 
+  // GİRİŞ_CIKIŞ KONTROL
   const userObserver = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const { email, displayName, photoURL } = user;
-        setCurrentUser({ email, displayName, photoURL })
+        setCurrentUser({ email, displayName, photoURL });
 
+        sessionStorage.setItem(
+          "user",
+          JSON.stringify({ email, displayName, photoURL })
+        );
       } else {
         setCurrentUser(false);
+        sessionStorage.clear();
       }
     });
   };
 
-  const values = { createUser, signIn, logOut };
+  const values = { createUser, signIn, logOut, currentUser, userObserver };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
