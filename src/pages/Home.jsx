@@ -23,7 +23,7 @@ const Home = () => {
   };
 
   return (
-    <>
+    <div className="dark:bg-gray-700 bg-gray-100">
       {currentUser && <form className="max-w-screen-sm mx-auto mt-4 " onSubmit={handleSubmit}>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -71,7 +71,7 @@ const Home = () => {
           movies.map((movie) => <MovieCard key={movie.id} {...movie} />)
         )}
       </div>
-    </>
+    </div>
   );
 };
 

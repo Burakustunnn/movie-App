@@ -29,7 +29,7 @@ const MovieDetail = () => {
   }, [movieDetailBaseUrl,videoUrl]);
 
   return (
-    <div className="min-h-screen grid place-items-center font-mono bg-gray-900 text-center" key={id}>
+    <div className="min-h-screen grid place-items-center font-mono dark:bg-gray-700 bg-gray-100 text-center" key={id}>
       <div className="bg-white rounded-md dark:bg-gray-800 shadow-lg">
         <div className="md:flex px-4 leading-none max-w-4xl">
           <div className="flex-none ">
@@ -40,10 +40,10 @@ const MovieDetail = () => {
                   : defaultImage
               }
               alt="pic"
-              className="h-80 w-80 rounded-md transform -translate-y-4 border-4 border-gray-300 shadow-lg"
+              className="h-80 w-80 rounded-md transform -translate-y-4 border-4 dark:border-gray-300 border-gray-500 shadow-lg"
             />
           </div>
-          <div className="flex-col text-gray-300">
+          <div className="flex-col dark:text-gray-300">
             <p className="pt-4 text-2xl font-bold">{movieDetails.title}</p>
             <hr className="hr-text" />
             <div className="text-md flex justify-between px-4 my-2">

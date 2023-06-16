@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { toastErrorNotify, toastSuccessNotify } from "../helpers/ToastNotify";
 
 export const AuthContext = createContext();
 
@@ -26,6 +27,7 @@ const AuthContextProvider = ({ children }) => {
       await createUserWithEmailAndPassword(auth, email, password);
       toastSuccessNotify("Registered successfully!");
       navigate("/");
+      
     } catch (error) {
       toastErrorNotify(error.message);
     }
@@ -37,6 +39,7 @@ const AuthContextProvider = ({ children }) => {
       await signInWithEmailAndPassword(auth, email, password);
       toastSuccessNotify("Logged in successfully!");
       navigate("/");
+      
     } catch (error) {
       toastErrorNotify(error.message);
     }
@@ -45,6 +48,8 @@ const AuthContextProvider = ({ children }) => {
   // ÇIKIŞ İŞLEMİ
   const logOut = () => {
     signOut(auth);
+    toastSuccessNotify("Logged out successfully!")
+
   };
 
   // GİRİŞ_CIKIŞ KONTROL
