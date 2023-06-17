@@ -27,7 +27,7 @@ const Login = () => {
         <div className="relative px-4 py-10 bg-white dark:dark:bg-gray-900 shadow-lg sm:rounded-3xl sm:p-20">
           <form className="max-w-md mx-auto w-[25rem]" onSubmit={handleSubmit}>
             <div>
-              <h1 className="text-2xl font-semibold text-center">sign in</h1>
+              <h1 className="text-2xl font-semibold text-center dark:text-white">Sign in</h1>
             </div>
             <div className="divide-y divide-gray-200">
               <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">

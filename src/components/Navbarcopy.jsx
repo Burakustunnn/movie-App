@@ -2,18 +2,25 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Switch from "./Switch";
+import Fav from "./Fav";
+import { MovieContext } from "../context/MovieContext";
 
 const Navbarcopy = () => {
   const { currentUser, logOut } = useContext(AuthContext);
+  const { favorites } = useContext(MovieContext);
+  const fav = favorites.length;
+
 
   return (
-    <nav className="bg-white border-gray-200 dark:bg-gray-900">
+    <nav className="sticky top-0 z-50 bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href={"/"} className="flex items-center">
           <img
             src="./849345-removebg-preview.png"
             className="h-8 mr-3"
-            alt="Flowbite Logo"
+            alt="Movie Logo"
+            loading="lazy"
+
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Movie App
@@ -93,6 +100,7 @@ const Navbarcopy = () => {
               </ul>
             </div>
             <Switch />
+            <Fav fav={fav}/>
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"

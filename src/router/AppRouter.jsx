@@ -1,21 +1,33 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { useContext } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Home from "../pages/Home";
 import MovieDetail from "../pages/MovieDetail";
+import PrivateRouter from "./PrivateRouter";
+import { AuthContext } from "../context/AuthContext";
+import Favorites from "../pages/Favorites";
 
 const AppRouter = () => {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/details/:id" element={<MovieDetail/>}  />
+
+        <Route
+          path="/details/:id"
+          element={currentUser ? <MovieDetail /> : <Navigate to="/login" />}
+        />
+      </Routes>
+      <Routes pat="/favorites" element={currentUser ? <Favorites/> :<Navigate to="/login" /> }>
+       
       </Routes>
 
       <Footer />
