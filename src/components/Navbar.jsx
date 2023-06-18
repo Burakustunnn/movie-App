@@ -4,6 +4,8 @@ import { AuthContext } from "../context/AuthContext";
 import Switch from "./Switch";
 import Fav from "./Fav";
 import { MovieContext } from "../context/MovieContext";
+import MovieIcon from "../assets/MovieIcon";
+
 
 const Navbarcopy = () => {
   const { currentUser, logOut } = useContext(AuthContext);
@@ -12,17 +14,19 @@ const Navbarcopy = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-gray-200 dark:bg-gray-900">
+         
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href={"/"} className="flex items-center">
-          <img
-            src="./849345-removebg-preview.png"
+    
+       <a href={"/"} className="flex items-center">
+           <img
+            src=""
             className="h-8 mr-3"
             alt="Movie Logo"
             loading="lazy"
-          />
+          />  
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            Movie App
-          </span>
+             Movie App
+          </span> 
         </a>
         {!currentUser && (
           <div className="flex gap-10 dark:text-white  md:order-2">
