@@ -21,38 +21,35 @@ const AuthContextProvider = ({ children }) => {
     userObserver();
   }, []);
 
-  // REGİSTER İŞLEMİ
+  //! REGİSTER İŞLEMİ
   const createUser = async (email, password) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       toastSuccessNotify("Registered successfully!");
       navigate("/");
-      
     } catch (error) {
       toastErrorNotify(error.message);
     }
   };
 
-  // LOGİN İŞLEMİ
+  //! LOGİN İŞLEMİ
   const signIn = async (email, password) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toastSuccessNotify("Logged in successfully!");
       navigate("/");
-      
     } catch (error) {
       toastErrorNotify(error.message);
     }
   };
 
-  // ÇIKIŞ İŞLEMİ
+  //! ÇIKIŞ İŞLEMİ
   const logOut = () => {
     signOut(auth);
-    toastSuccessNotify("Logged out successfully!")
-
+    toastSuccessNotify("Logged out successfully!");
   };
 
-  // GİRİŞ_CIKIŞ KONTROL
+  //! GİRİŞ_CIKIŞ KONTROL
   const userObserver = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -70,7 +67,29 @@ const AuthContextProvider = ({ children }) => {
     });
   };
 
-  const values = { createUser, signIn, logOut, currentUser, userObserver };
+  //! Google ile girişi
+
+  const signUpProvider = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        console.log(result);
+        navigate("/");
+        toastSuccessNotify("Logged in successfully!");
+      })
+      .catch((error) => {
+        toastErrorNotify(error.message);
+      });
+  };
+
+  const values = {
+    createUser,
+    signIn,
+    logOut,
+    currentUser,
+    userObserver,
+    signUpProvider,
+  };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
 };
