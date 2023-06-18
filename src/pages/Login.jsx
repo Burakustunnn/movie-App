@@ -1,12 +1,13 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import GoogleIcon from "../assets/GoogleIcon";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const { signIn } = useContext(AuthContext);
+  const { signIn, signUpProvider } = useContext(AuthContext);
 
   const { email, password } = formData;
 
@@ -16,8 +17,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    signIn(email,password)     
+    signIn(email, password);
     setFormData({ email: "", password: "" });
+  };
+
+  const handleProviderLogin = () => {
+    signUpProvider();
   };
 
   return (
@@ -27,7 +32,9 @@ const Login = () => {
         <div className="relative px-4 py-10 bg-white dark:bg-gray-900 shadow-lg sm:rounded-3xl sm:p-20">
           <form className="max-w-md mx-auto w-[25rem]" onSubmit={handleSubmit}>
             <div>
-              <h1 className="text-2xl font-semibold text-center dark:text-white">Sign in</h1>
+              <h1 className="text-2xl font-semibold text-center dark:text-white">
+                Sign in
+              </h1>
             </div>
             <div className="divide-y divide-gray-200">
               <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
@@ -79,10 +86,11 @@ const Login = () => {
                     Submit
                   </button>
                   <button
-                    className="bg-blue-500 text-white w-6/12 rounded-md px-2 py-1"
+                    className="flex items-center text-base bg-blue-500 text-white w-6/12 rounded-md px-2 py-1"
                     type="button"
+                    onClick={handleProviderLogin}
                   >
-                    Google
+                    <GoogleIcon color="currentColor" /> Continue with Google
                   </button>
                 </div>
               </div>

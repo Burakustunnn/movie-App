@@ -2,9 +2,11 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "../auth/firebase";
 import { useNavigate } from "react-router-dom";
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
 } from "firebase/auth";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/ToastNotify";

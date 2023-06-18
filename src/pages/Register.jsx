@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import GoogleIcon from "../assets/GoogleIcon";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +9,7 @@ const Register = () => {
     lastname: "",
     firstname: "",
   });
-  const { createUser } = useContext(AuthContext);
+  const { createUser,signUpProvider } = useContext(AuthContext);
 
   const { email, password, lastname, firstname } = formData;
 
@@ -22,6 +23,10 @@ const Register = () => {
 
     setFormData({ username: "", email: "", password: "", address: "" });
   };
+  const handleProviderLogin =()=>{
+    signUpProvider()
+
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-700 py-6 flex flex-col justify-center sm:py-12 w-[100%]">
@@ -116,10 +121,11 @@ const Register = () => {
                     Submit
                   </button>
                   <button
-                    className="bg-blue-500 text-white w-6/12 rounded-md px-2 py-1"
+                    className="flex items-center text-base bg-blue-500 text-white w-6/12 rounded-md px-2 py-1"
                     type="button"
+                    onClick={handleProviderLogin}
                   >
-                    Google
+                   <GoogleIcon color="currentColor" /> Continue with Google
                   </button>
                 </div>
               </div>
