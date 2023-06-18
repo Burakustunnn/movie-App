@@ -10,7 +10,6 @@ const Navbarcopy = () => {
   const { favorites } = useContext(MovieContext);
   const fav = favorites.length;
 
-
   return (
     <nav className="sticky top-0 z-50 bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -20,7 +19,6 @@ const Navbarcopy = () => {
             className="h-8 mr-3"
             alt="Movie Logo"
             loading="lazy"
-
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             Movie App
@@ -30,7 +28,7 @@ const Navbarcopy = () => {
           <div className="flex gap-10 dark:text-white  md:order-2">
             <Link to={"/login"}>Login</Link>
             <Link to={"/register"}>Register</Link>
-            <Switch/>
+            <Switch />
           </div>
         )}
         {currentUser && (
@@ -46,7 +44,7 @@ const Navbarcopy = () => {
               <span className="sr-only">Open user menu</span>
               <img
                 className="w-8 h-8 rounded-full"
-                src="/docs/images/people/profile-picture-3.jpg"
+                src={currentUser?.photoURL || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzPb_pSj-ir-9eB6mi0lVJdQP1KKHiB8fRBS1CbmOXGd9Z1FEGMJHbEKhahwhWLGSaEXY&usqp=CAU"}
                 alt="user photo"
               />
             </button>
@@ -58,10 +56,10 @@ const Navbarcopy = () => {
             >
               <div className="px-4 py-3">
                 <span className="block text-sm text-gray-900 dark:text-white">
-                  Bonnie Green
+                  {currentUser?.displayName}
                 </span>
                 <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                  name@flowbite.com
+                  {currentUser?.email}
                 </span>
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
@@ -99,8 +97,8 @@ const Navbarcopy = () => {
                 </li>
               </ul>
             </div>
-            <Switch />
             <Fav fav={fav}/>
+            <Switch />
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
@@ -132,18 +130,18 @@ const Navbarcopy = () => {
         >
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+              <Link
+                to="/"
+                className="block py-2 pl-3 pr-4  dark:text-white dark:active:bg-blue-700  active:bg-blue-700  hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:bg-transparent rounded md:bg-transparent dark:hover:bg-gray-700 md:text-blue-700 md:p-0 md:dark:text-blue-500"
                 aria-current="page"
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
               <a
                 href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className="block py-2 pl-3 pr-4 text-gray-900 rounded  dark:active:bg-blue-700  active:bg-blue-700  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 About
               </a>
@@ -151,7 +149,7 @@ const Navbarcopy = () => {
             <li>
               <a
                 href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className="block py-2 pl-3 pr-4 text-gray-900 rounded  dark:active:bg-blue-700  active:bg-blue-700  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >
                 Services
               </a>
@@ -159,7 +157,7 @@ const Navbarcopy = () => {
             <li>
               <a
                 href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700  dark:active:bg-blue-700  active:bg-blue-700 "
               >
                 Pricing
               </a>
@@ -167,7 +165,7 @@ const Navbarcopy = () => {
             <li>
               <a
                 href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700  dark:active:bg-blue-700  active:bg-blue-700 "
               >
                 Contact
               </a>

@@ -6,7 +6,7 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Home from "../pages/Home";
 import MovieDetail from "../pages/MovieDetail";
-import PrivateRouter from "./PrivateRouter";
+
 import { AuthContext } from "../context/AuthContext";
 import Favorites from "../pages/Favorites";
 
@@ -25,9 +25,10 @@ const AppRouter = () => {
           path="/details/:id"
           element={currentUser ? <MovieDetail /> : <Navigate to="/login" />}
         />
-      </Routes>
-      <Routes pat="/favorites" element={currentUser ? <Favorites/> :<Navigate to="/login" /> }>
-       
+        <Route
+          path="/favorites"
+          element={currentUser ? <Favorites /> : <Navigate to="/login" />}
+        />
       </Routes>
 
       <Footer />

@@ -1,6 +1,6 @@
 
 import { useNavigate } from "react-router-dom";
-import FavIcon from "../auth/FavIcon";
+import FavIcon from "../assets/FavIcon";
 
 const Fav = ({fav}) => {
     let navigate = useNavigate();
@@ -10,7 +10,7 @@ const Fav = ({fav}) => {
     role="button"
     onClick={() => navigate("/favorites")}
   >
-    <FavIcon />
+    <FavIcon className=" w-6 h-6  dark:text-white "  />
     <span className="absolute -mt-4 ml-3 rounded-full bg-red-700 py-0 px-1.5 text-xs text-white">
       {fav || null}
     </span>

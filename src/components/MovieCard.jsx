@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { MovieContext } from "../context/MovieContext";
-import FavIcon from "../auth/FavIcon";
+import FavIcon from "../assets/FavIcon";
 
 const IMG_API = "https://image.tmdb.org/t/p/w1280";
 const defaultImage =
@@ -59,7 +59,7 @@ const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
         {currentUser && (
           <div className="absolute left-52 top-4" role="button">
             <FavIcon
-              className=" w-6 h-6 hover:scale-110 text-white"
+              className=" w-6 h-6 hover:scale-110 dark:text-white"
               onClick={(e) => {
                 e.stopPropagation();
                 addToFav({

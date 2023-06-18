@@ -10,7 +10,7 @@ const MovieContextProvider = ({ children }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState(
-    JSON.parse(localStorage.getItem("favorites")) || []
+    JSON.parse(sessionStorage.getItem("favorites")) || []
   );
 
   const getMovies = (API) => {
@@ -19,8 +19,9 @@ const MovieContextProvider = ({ children }) => {
     axios
       .get(API)
       .then((res) => setMovies(res.data.results))
-      .catch((err) => console.log(err))
-      .finally(setLoading(false));
+      .catch((err) => console.log(err));
+
+      setLoading(false);
   };
 
   useEffect(() => {
@@ -33,10 +34,11 @@ const MovieContextProvider = ({ children }) => {
     if (isFavorite) {
       let newFavorites = favorites.filter((item) => item.id !== movie.id);
       setFavorites(newFavorites);
+      sessionStorage.setItem("favorites", JSON.stringify(newFavorites));
     } else {
       let newFavorites = [...favorites, movie];
       setFavorites(newFavorites);
-      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      sessionStorage.setItem("favorites", JSON.stringify(newFavorites));
     }
   };
 
