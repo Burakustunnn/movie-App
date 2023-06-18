@@ -1,38 +1,49 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Switch from "./Switch";
 import Fav from "./Fav";
 import { MovieContext } from "../context/MovieContext";
-import MovieIcon from "../assets/MovieIcon";
-
 
 const Navbarcopy = () => {
+  const [darkMode, setDarkMode] = useState(true);
   const { currentUser, logOut } = useContext(AuthContext);
   const { favorites } = useContext(MovieContext);
   const fav = favorites.length;
 
+  
+
   return (
-    <nav className="sticky top-0 z-50 bg-white border-gray-200 dark:bg-gray-900">
-         
+    <nav className="sticky top-0 z-50 bg-white border-gray-200 dark:bg-gray-900" >
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    
-       <a href={"/"} className="flex items-center">
-           <img
+        <a href={"/"} className="flex items-center gap-4">
+          {/* <img
             src=""
             className="h-8 mr-3"
             alt="Movie Logo"
             loading="lazy"
-          />  
+            />   */}
+          <span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height={30}
+              width={30}
+              viewBox="0 0 576 512"
+              fill={darkMode ? "#fff" : "#000"}
+            >
+              <path d="M0 128C0 92.7 28.7 64 64 64H320c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2V384c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1V320 192 174.9l14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z" />
+            </svg>
+          </span>
+
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-             Movie App
-          </span> 
+            Movie App
+          </span>
         </a>
         {!currentUser && (
           <div className="flex gap-10 dark:text-white  md:order-2">
             <Link to={"/login"}>Login</Link>
             <Link to={"/register"}>Register</Link>
-            <Switch />
+            <Switch darkMode={darkMode} setDarkMode={setDarkMode} />
           </div>
         )}
         {currentUser && (
@@ -48,7 +59,10 @@ const Navbarcopy = () => {
               <span className="sr-only">Open user menu</span>
               <img
                 className="w-8 h-8 rounded-full"
-                src={currentUser?.photoURL || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzPb_pSj-ir-9eB6mi0lVJdQP1KKHiB8fRBS1CbmOXGd9Z1FEGMJHbEKhahwhWLGSaEXY&usqp=CAU"}
+                src={
+                  currentUser?.photoURL ||
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzPb_pSj-ir-9eB6mi0lVJdQP1KKHiB8fRBS1CbmOXGd9Z1FEGMJHbEKhahwhWLGSaEXY&usqp=CAU"
+                }
                 alt="user photo"
               />
             </button>
@@ -101,8 +115,8 @@ const Navbarcopy = () => {
                 </li>
               </ul>
             </div>
-            <Fav fav={fav}/>
-            <Switch />
+            <Fav fav={fav} />
+            <Switch darkMode={darkMode} setDarkMode={setDarkMode} />
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
@@ -110,7 +124,7 @@ const Navbarcopy = () => {
               aria-controls="mobile-menu-2"
               aria-expanded="false"
             >
-              <span className="sr-only">Open main menu</span>
+              
               <svg
                 className="w-6 h-6"
                 aria-hidden="true"

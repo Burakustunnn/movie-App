@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { MovieContext } from "../context/MovieContext";
@@ -11,8 +10,18 @@ const defaultImage =
 const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
   const navigate = useNavigate();
   const { currentUser } = useContext(AuthContext);
-  const { addToFav, favorites  } = useContext(MovieContext);
+  const { addToFav, favorites } = useContext(MovieContext);
   const isFavorite = favorites.some((item) => item.id === id);
+
+  const getVoteClass = (vote) => {
+    if (vote >= 8) {
+      return "green";
+    } else if (vote >= 6) {
+      return "orange";
+    } else {
+      return "red";
+    }
+  };
 
   return (
     <div
@@ -35,7 +44,10 @@ const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
           {overview}
         </p> */}
       </div>
-      <div className="mb-2 flex relative">
+      <div className="mb-2 flex align-baseline items-center justify-evenly w-full">
+       {currentUser && <span className={`tag ${getVoteClass(vote_average)}`}>
+          {vote_average.toFixed(1)}
+        </span>} 
         <a
           href="#"
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -57,7 +69,7 @@ const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
           </svg>
         </a>
         {currentUser && (
-          <div className="absolute left-52 top-4" role="button">
+          <div role="button" >
             <FavIcon
               className=" w-6 h-6 hover:scale-110 dark:text-white"
               onClick={(e) => {
