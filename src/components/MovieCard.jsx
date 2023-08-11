@@ -25,7 +25,7 @@ const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
 
   return (
     <div
-      className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center justify-between"
+      className="max-w-sm h-[700px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-center justify-between"
       id={id}
     >
       <img
@@ -39,10 +39,6 @@ const MovieCard = ({ title, poster_path, overview, vote_average, id }) => {
         <h5 className="mb-2 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">
           {title}
         </h5>
-
-        {/* <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
-          {overview}
-        </p> */}
       </div>
       <div className="mb-2 flex align-baseline items-center justify-evenly w-full">
        {currentUser && <span className={`tag ${getVoteClass(vote_average)}`}>

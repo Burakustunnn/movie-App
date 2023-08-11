@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import Switch from "./Switch";
@@ -6,23 +6,39 @@ import Fav from "./Fav";
 import { MovieContext } from "../context/MovieContext";
 
 const Navbarcopy = () => {
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const [isOpenDropDown, setIsOpenDropDown] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
   const { currentUser, logOut } = useContext(AuthContext);
+  const dropdownRef = useRef(null);
+
   const { favorites } = useContext(MovieContext);
   const fav = favorites.length;
 
-  
+  console.log(mobileMenu);
+
+  const toggleDropdown = () => {
+    setIsOpenDropDown(!isOpenDropDown);
+  };
+
+  const handleOutsideClick = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setIsOpenDropDown(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpenDropDown) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    } else {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    }
+  }, [isOpenDropDown]);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white border-gray-200 dark:bg-gray-900" >
+    <nav className="sticky top-0 z-50 bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href={"/"} className="flex items-center gap-4">
-          {/* <img
-            src=""
-            className="h-8 mr-3"
-            alt="Movie Logo"
-            loading="lazy"
-            />   */}
           <span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -47,16 +63,15 @@ const Navbarcopy = () => {
           </div>
         )}
         {currentUser && (
-          <div className="flex items-center gap-2 md:gap-8 md:order-2">
+          <div
+            className="flex items-center gap-2 md:gap-8 md:order-2 relative "
+            ref={dropdownRef}
+          >
             <button
               type="button"
-              className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-              id="user-menu-button"
-              aria-expanded="false"
-              data-dropdown-toggle="user-dropdown"
-              data-dropdown-placement="bottom"
+              className="flex mr-3 text-sm bg-gray-800 rounded-full"
+              onClick={toggleDropdown}
             >
-              <span className="sr-only">Open user menu</span>
               <img
                 className="w-8 h-8 rounded-full"
                 src={
@@ -68,63 +83,61 @@ const Navbarcopy = () => {
             </button>
 
             {/* Dropdown menu */}
-            <div
-              className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-              id="user-dropdown"
-            >
-              <div className="px-4 py-3">
-                <span className="block text-sm text-gray-900 dark:text-white">
-                  {currentUser?.displayName}
-                </span>
-                <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                  {currentUser?.email}
-                </span>
+            {isOpenDropDown && (
+              <div
+                className={`absolute top-6 right-10  z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600`}
+              >
+                <div className="px-4 py-3">
+                  <span className="block text-sm text-gray-900 dark:text-white">
+                    {currentUser?.displayName}
+                  </span>
+                  <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
+                    {currentUser?.email}
+                  </span>
+                </div>
+                <ul className="py-2" aria-labelledby="user-menu-button">
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Dashboard
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Settings
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Earnings
+                    </a>
+                  </li>
+                  <li onClick={logOut}>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Sign out
+                    </a>
+                  </li>
+                </ul>
               </div>
-              <ul className="py-2" aria-labelledby="user-menu-button">
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    Dashboard
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    Settings
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    Earnings
-                  </a>
-                </li>
-                <li onClick={logOut}>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                  >
-                    Sign out
-                  </a>
-                </li>
-              </ul>
-            </div>
+            )}
             <Fav fav={fav} />
             <Switch darkMode={darkMode} setDarkMode={setDarkMode} />
             <button
-              data-collapse-toggle="mobile-menu-2"
               type="button"
               className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-              aria-controls="mobile-menu-2"
-              aria-expanded="false"
+              onClick={() => setMobileMenu(!mobileMenu)}
             >
-              
               <svg
                 className="w-6 h-6"
                 aria-hidden="true"
@@ -141,55 +154,59 @@ const Navbarcopy = () => {
             </button>
           </div>
         )}
-
-        <div
-          className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-          id="mobile-menu-2"
-        >
-          <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            <li>
-              <Link
-                to="/"
-                className="block py-2 pl-3 pr-4  dark:text-white dark:active:bg-blue-700  active:bg-blue-700  hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:bg-transparent rounded md:bg-transparent dark:hover:bg-gray-700 md:text-blue-700 md:p-0 md:dark:text-blue-500"
-                aria-current="page"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded  dark:active:bg-blue-700  active:bg-blue-700  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded  dark:active:bg-blue-700  active:bg-blue-700  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Services
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700  dark:active:bg-blue-700  active:bg-blue-700 "
-              >
-                Pricing
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700  dark:active:bg-blue-700  active:bg-blue-700 "
-              >
-                Contact
-              </a>
-            </li>
-          </ul>
-        </div>
+        {mobileMenu && (
+          <div
+            className={`fixed w-[100wh] h-[100vh]  inset-0 top-[4.5rem] bottom-0 left-0 right-0 z-0 transition-colors overflow-y-hidden ${
+              mobileMenu ? "visible bg-black/50 " : "invisible"
+            } `}
+            onClick={() => setMobileMenu(!mobileMenu)}
+          >
+            <div className="items-center justify-between w-full md:flex md:w-auto md:order-1"  onClick={(e) => e.stopPropagation()}>
+              <ul className="flex flex-col font-medium p-4 md:p-0  border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li>
+                  <a
+                    href="/"
+                    className="block py-2 pl-3 pr-4  dark:text-white dark:active:bg-blue-700  active:bg-blue-700  hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:bg-transparent rounded md:bg-transparent dark:hover:bg-gray-700 md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                  >
+                    Home
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded  dark:active:bg-blue-700  active:bg-blue-700  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  >
+                    About
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded  dark:active:bg-blue-700  active:bg-blue-700  hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                  >
+                    Services
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700  dark:active:bg-blue-700  active:bg-blue-700 "
+                  >
+                    Pricing
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700  dark:active:bg-blue-700  active:bg-blue-700 "
+                  >
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );

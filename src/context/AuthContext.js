@@ -75,7 +75,7 @@ const AuthContextProvider = ({ children }) => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         navigate("/");
         toastSuccessNotify("Logged in successfully!");
       })
